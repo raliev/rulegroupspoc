@@ -78,7 +78,9 @@ class RuleProcessor
 
 					CustomerGroup checkNewGroup = new CustomerGroup("forCheck");
 					checkNewGroup.getCustomers().addAll(customers);
-					checkNewGroup.getCustomers().add(customer);
+					if (!group.getAllCustomerNames().contains(customer.getName())) {
+						checkNewGroup.getCustomers().add(customer);
+					}
 					CustomerGroup foundGroup = groupsService.findGroup(checkNewGroup);
 					if (foundGroup != null) {
 						groupsService.associateProductWithGroup(product, foundGroup);

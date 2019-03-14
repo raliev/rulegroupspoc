@@ -215,9 +215,10 @@ public class GroupsDAO {
         if (group.getCustomers() == null) { return null; }
         List<String> customer = group.getAllCustomerNames();
         Collections.sort(customer, (o1, o2) -> o1.toString().compareTo(o2.toString()));
-        int cnt = 0;
+
         for (CustomerGroup g : allGroups) {
             CustomerGroup savedGroup = new CustomerGroup("");
+            int cnt = 0;
             for (String c : g.getAllCustomerNames()) {
                 if (group.getAllCustomerNames().contains(c))
                 {
