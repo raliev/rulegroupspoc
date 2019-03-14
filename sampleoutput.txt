@@ -39,9 +39,24 @@ CODE:
         ruleProcessor.printProductGroupTable();
         ruleProcessor.printGroupDetailsForDebugPurposes();
         ruleProcessor.printCustomerProductMatrix();
+        ruleProcessor.process("C00000002", "P00000004", "include");
+        ruleProcessor.printProductGroupTable();
+        ruleProcessor.printGroupDetailsForDebugPurposes();
+        ruleProcessor.printCustomerProductMatrix();
+        ruleProcessor.process("C00000005", "P00000004", "include");
+        ruleProcessor.printProductGroupTable();
+        ruleProcessor.printGroupDetailsForDebugPurposes();
+        ruleProcessor.printCustomerProductMatrix();
+        ruleProcessor.process("C00000001", "P00000005", "include");
+        ruleProcessor.printProductGroupTable();
+        ruleProcessor.printGroupDetailsForDebugPurposes();
+        ruleProcessor.printCustomerProductMatrix();
+        ruleProcessor.process("C00000004", "P00000005", "include");
+        ruleProcessor.printProductGroupTable();
+        ruleProcessor.printGroupDetailsForDebugPurposes();
+        ruleProcessor.printCustomerProductMatrix();
 
 OUTPUT:
-
 
 RULE>> C00000003 <INCLUDE> P00000001
 RULE>> C00000001 <INCLUDE> P00000002
@@ -94,12 +109,12 @@ P00000005|       |       |   true|
 RULE>> C00000003 <INCLUDE> P00000004
 
 ========= Product x Groups =====
-         |gr00002|gr00004|gr00005|gr00006|gr00007
-P00000001|       |       |       |   true|       
-P00000002|   true|       |       |       |       
-P00000003|       |   true|       |       |       
-P00000004|       |       |       |       |   true
-P00000005|       |       |   true|       |       
+         |gr00002|gr00004|gr00005|gr00006
+P00000001|       |       |       |   true
+P00000002|   true|       |       |       
+P00000003|       |   true|       |       
+P00000004|       |       |       |   true
+P00000005|       |       |   true|       
 
 
 ========= Groups and their customers  =====
@@ -107,34 +122,15 @@ P00000005|       |       |   true|       |
 * gr00004: C00000002,C00000005
 * gr00005: C00000002
 * gr00006: C00000003,C00000004
-* gr00007: C00000002,C00000003
 
 RULE>> C00000004 <INCLUDE> P00000002
 
 ========= Product x Groups =====
-         |gr00004|gr00005|gr00006|gr00007|gr00008
-P00000001|       |       |   true|       |       
-P00000002|       |       |       |       |   true
-P00000003|   true|       |       |       |       
-P00000004|       |       |       |   true|       
-P00000005|       |   true|       |       |       
-
-
-========= Groups and their customers  =====
-* gr00004: C00000002,C00000005
-* gr00005: C00000002
-* gr00006: C00000003,C00000004
-* gr00007: C00000002,C00000003
-* gr00008: C00000001,C00000004
-
-RULE>> C00000002 <EXCLUDE> P00000004
-
-========= Product x Groups =====
-         |gr00004|gr00005|gr00006|gr00008
+         |gr00004|gr00005|gr00006|gr00007
 P00000001|       |       |   true|       
 P00000002|       |       |       |   true
 P00000003|   true|       |       |       
-P00000004|       |       |       |       
+P00000004|       |       |   true|       
 P00000005|       |   true|       |       
 
 
@@ -142,23 +138,40 @@ P00000005|       |   true|       |
 * gr00004: C00000002,C00000005
 * gr00005: C00000002
 * gr00006: C00000003,C00000004
-* gr00008: C00000001,C00000004
+* gr00007: C00000001,C00000004
+
+RULE>> C00000002 <EXCLUDE> P00000004
+
+========= Product x Groups =====
+         |gr00004|gr00005|gr00006|gr00007
+P00000001|       |       |   true|       
+P00000002|       |       |       |   true
+P00000003|   true|       |       |       
+P00000004|       |       |   true|       
+P00000005|       |   true|       |       
+
+
+========= Groups and their customers  =====
+* gr00004: C00000002,C00000005
+* gr00005: C00000002
+* gr00006: C00000003,C00000004
+* gr00007: C00000001,C00000004
 
 RULE>> C00000002 <EXCLUDE> P00000005
 
 ========= Product x Groups =====
-         |gr00004|gr00006|gr00008
+         |gr00004|gr00006|gr00007
 P00000001|       |   true|       
 P00000002|       |       |   true
 P00000003|   true|       |       
-P00000004|       |       |       
+P00000004|       |   true|       
 P00000005|       |       |       
 
 
 ========= Groups and their customers  =====
 * gr00004: C00000002,C00000005
 * gr00006: C00000003,C00000004
-* gr00008: C00000001,C00000004
+* gr00007: C00000001,C00000004
 
 
 ========= Product x Customers =====
@@ -166,78 +179,183 @@ P00000005|       |       |
 P00000001|         |         |     true|     true|         
 P00000002|     true|         |         |     true|         
 P00000003|         |     true|         |         |     true
-P00000004|         |         |         |         |         
+P00000004|         |         |     true|     true|         
 P00000005|         |         |         |         |         
 
 RULE>> C00000002 <EXCLUDE> P00000001
 
 ========= Product x Groups =====
-         |gr00004|gr00006|gr00008
+         |gr00004|gr00006|gr00007
 P00000001|       |   true|       
 P00000002|       |       |   true
 P00000003|   true|       |       
-P00000004|       |       |       
+P00000004|       |   true|       
 P00000005|       |       |       
 
 
 ========= Groups and their customers  =====
 * gr00004: C00000002,C00000005
 * gr00006: C00000003,C00000004
-* gr00008: C00000001,C00000004
+* gr00007: C00000001,C00000004
 
 RULE>> C00000003 <EXCLUDE> P00000001
 
 ========= Product x Groups =====
-         |gr00004|gr00008
-P00000001|       |       
-P00000002|       |   true
-P00000003|   true|       
-P00000004|       |       
-P00000005|       |       
+         |gr00004|gr00006|gr00007
+P00000001|       |       |       
+P00000002|       |       |   true
+P00000003|   true|       |       
+P00000004|       |   true|       
+P00000005|       |       |       
 
 
 ========= Groups and their customers  =====
 * gr00004: C00000002,C00000005
-* gr00008: C00000001,C00000004
+* gr00006: C00000003,C00000004
+* gr00007: C00000001,C00000004
 
 RULE>> C00000005 <INCLUDE> P00000001
 
 ========= Product x Groups =====
-         |gr00004|gr00008
-P00000001|       |       
-P00000002|       |   true
-P00000003|   true|       
-P00000004|       |       
-P00000005|       |       
+         |gr00004|gr00006|gr00007|gr00008
+P00000001|       |       |       |   true
+P00000002|       |       |   true|       
+P00000003|   true|       |       |       
+P00000004|       |   true|       |       
+P00000005|       |       |       |       
 
 
 ========= Groups and their customers  =====
 * gr00004: C00000002,C00000005
-* gr00008: C00000001,C00000004
+* gr00006: C00000003,C00000004
+* gr00007: C00000001,C00000004
+* gr00008: C00000005
 
 RULE>> C00000004 <EXCLUDE> P00000001
 
 ========= Product x Groups =====
-         |gr00004|gr00008
-P00000001|       |       
-P00000002|       |   true
-P00000003|   true|       
-P00000004|       |       
-P00000005|       |       
+         |gr00004|gr00006|gr00007|gr00008
+P00000001|       |       |       |   true
+P00000002|       |       |   true|       
+P00000003|   true|       |       |       
+P00000004|       |   true|       |       
+P00000005|       |       |       |       
 
 
 ========= Groups and their customers  =====
 * gr00004: C00000002,C00000005
-* gr00008: C00000001,C00000004
+* gr00006: C00000003,C00000004
+* gr00007: C00000001,C00000004
+* gr00008: C00000005
+
+
+========= Product x Customers =====
+         |C00000001|C00000002|C00000003|C00000004|C00000005
+P00000001|         |         |         |         |     true
+P00000002|     true|         |         |     true|         
+P00000003|         |     true|         |         |     true
+P00000004|         |         |     true|     true|         
+P00000005|         |         |         |         |         
+
+RULE>> C00000002 <INCLUDE> P00000004
+
+========= Product x Groups =====
+         |gr00004|gr00007|gr00008|gr00009
+P00000001|       |       |   true|       
+P00000002|       |   true|       |       
+P00000003|   true|       |       |       
+P00000004|       |       |       |   true
+P00000005|       |       |       |       
+
+
+========= Groups and their customers  =====
+* gr00004: C00000002,C00000005
+* gr00007: C00000001,C00000004
+* gr00008: C00000005
+* gr00009: C00000003,C00000004,C00000002
+
+
+========= Product x Customers =====
+         |C00000001|C00000002|C00000003|C00000004|C00000005
+P00000001|         |         |         |         |     true
+P00000002|     true|         |         |     true|         
+P00000003|         |     true|         |         |     true
+P00000004|         |     true|     true|     true|         
+P00000005|         |         |         |         |         
+
+RULE>> C00000005 <INCLUDE> P00000004
+
+========= Product x Groups =====
+         |gr00004|gr00007|gr00008
+P00000001|       |       |   true
+P00000002|       |   true|       
+P00000003|   true|       |       
+P00000004|   true|       |       
+P00000005|       |       |       
+
+
+========= Groups and their customers  =====
+* gr00004: C00000002,C00000005
+* gr00007: C00000001,C00000004
+* gr00008: C00000005
 
 
 ========= Product x Customers =====
          |C00000001|C00000002|C00000004|C00000005
-P00000001|         |         |         |         
+P00000001|         |         |         |     true
 P00000002|     true|         |     true|         
 P00000003|         |     true|         |     true
-P00000004|         |         |         |         
+P00000004|         |     true|         |     true
 P00000005|         |         |         |         
 
+RULE>> C00000001 <INCLUDE> P00000005
 
-Process finished with exit code 0
+========= Product x Groups =====
+         |gr00004|gr00007|gr00008|gr00010
+P00000001|       |       |   true|       
+P00000002|       |   true|       |       
+P00000003|   true|       |       |       
+P00000004|   true|       |       |       
+P00000005|       |       |       |   true
+
+
+========= Groups and their customers  =====
+* gr00004: C00000002,C00000005
+* gr00007: C00000001,C00000004
+* gr00008: C00000005
+* gr00010: C00000001
+
+
+========= Product x Customers =====
+         |C00000001|C00000002|C00000004|C00000005
+P00000001|         |         |         |     true
+P00000002|     true|         |     true|         
+P00000003|         |     true|         |     true
+P00000004|         |     true|         |     true
+P00000005|     true|         |         |         
+
+RULE>> C00000004 <INCLUDE> P00000005
+
+========= Product x Groups =====
+         |gr00004|gr00007|gr00008
+P00000001|       |       |   true
+P00000002|       |   true|       
+P00000003|   true|       |       
+P00000004|   true|       |       
+P00000005|       |   true|       
+
+
+========= Groups and their customers  =====
+* gr00004: C00000002,C00000005
+* gr00007: C00000001,C00000004
+* gr00008: C00000005
+
+
+========= Product x Customers =====
+         |C00000001|C00000002|C00000004|C00000005
+P00000001|         |         |         |     true
+P00000002|     true|         |     true|         
+P00000003|         |     true|         |     true
+P00000004|         |     true|         |     true
+P00000005|     true|         |     true|         
+
