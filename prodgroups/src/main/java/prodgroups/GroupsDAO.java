@@ -209,4 +209,24 @@ public class GroupsDAO {
         }
         System.out.println();
     }
+
+    public CustomerGroup findGroup(CustomerGroup group) {
+        if (group == null) { return null; }
+        if (group.getCustomers() == null) { return null; }
+        List<String> customer = group.getAllCustomerNames();
+        Collections.sort(customer, (o1, o2) -> o1.toString().compareTo(o2.toString()));
+        int cnt = 0;
+        for (CustomerGroup g : allGroups) {
+            CustomerGroup savedGroup = new CustomerGroup("");
+            for (String c : g.getAllCustomerNames()) {
+                if (group.getAllCustomerNames().contains(c))
+                {
+                    cnt++;
+                    savedGroup = g;
+                }
+            }
+            if (cnt == group.getCustomers().size()) { return savedGroup; }
+        }
+        return null;
+    }
 }

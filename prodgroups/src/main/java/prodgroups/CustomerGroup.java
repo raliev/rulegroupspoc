@@ -8,7 +8,7 @@ import java.util.List;
 public class CustomerGroup
 {
 	String name;
-	List<Customer> customers;
+	List<Customer> customers = new ArrayList<>();
 	private List<String> cachedAllCustomerNames = null;
 
 	public CustomerGroup(String groupName) {

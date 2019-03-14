@@ -72,4 +72,8 @@ public class GroupsService
 	public void printCustomerProductMatrixForDebugPurposes() {
 		groupsDAO.printCustomerProductMatrixForDebugPurposes();
 	}
+
+	public CustomerGroup findGroup(CustomerGroup newGroup) {
+	 	return groupsDAO.findGroup(newGroup);
+	}
 }

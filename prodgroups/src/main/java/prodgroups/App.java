@@ -43,5 +43,21 @@ public class App
         ruleProcessor.printProductGroupTable();
         ruleProcessor.printGroupDetailsForDebugPurposes();
         ruleProcessor.printCustomerProductMatrix();
+        ruleProcessor.process("C00000002", "P00000004", "include");
+        ruleProcessor.printProductGroupTable();
+        ruleProcessor.printGroupDetailsForDebugPurposes();
+        ruleProcessor.printCustomerProductMatrix();
+        ruleProcessor.process("C00000005", "P00000004", "include");
+        ruleProcessor.printProductGroupTable();
+        ruleProcessor.printGroupDetailsForDebugPurposes();
+        ruleProcessor.printCustomerProductMatrix();
+        ruleProcessor.process("C00000001", "P00000005", "include");
+        ruleProcessor.printProductGroupTable();
+        ruleProcessor.printGroupDetailsForDebugPurposes();
+        ruleProcessor.printCustomerProductMatrix();
+        ruleProcessor.process("C00000004", "P00000005", "include");
+        ruleProcessor.printProductGroupTable();
+        ruleProcessor.printGroupDetailsForDebugPurposes();
+        ruleProcessor.printCustomerProductMatrix();
     }
 }

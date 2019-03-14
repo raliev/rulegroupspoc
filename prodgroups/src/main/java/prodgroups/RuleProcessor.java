@@ -1,5 +1,6 @@
 package prodgroups;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +38,7 @@ class RuleProcessor
 	private void process(Customer customer, Product product, Op op) {
 		log(customer, product, op);
 		List<CustomerGroup> groups = groupsService.findGroups(product);
-		if (groups == null) {
+		if (groups == null || (groups != null && groups.size() == 0)) {
 			CustomerGroup groupWithCustomers = groupsService.findGroupWithCustomers(Arrays.asList(customer));
 			CustomerGroup group;
 			if (groupWithCustomers == null) {
@@ -74,10 +75,20 @@ class RuleProcessor
 				//if (products.size() == 1 && products.get(0).getName().equals(product.getName())) {
 				// cleanup - findAllProductsWithGroup ?
 				if (op.equals(Op.INCLUDE)) {
-					CustomerGroup newGroup = groupsService.createGroup();
-					groupsService.addCustomersToGroup(newGroup, customers);
-					groupsService.addCustomerToGroup(newGroup, customer);
-					groupsService.associateProductWithGroup(product, newGroup);
+
+					CustomerGroup checkNewGroup = new CustomerGroup("forCheck");
+					checkNewGroup.getCustomers().addAll(customers);
+					checkNewGroup.getCustomers().add(customer);
+					CustomerGroup foundGroup = groupsService.findGroup(checkNewGroup);
+					if (foundGroup != null) {
+						groupsService.associateProductWithGroup(product, foundGroup);
+					} else {
+						CustomerGroup newGroup = groupsService.createGroup();
+						groupsService.addCustomersToGroup(newGroup, customers);
+						groupsService.addCustomerToGroup(newGroup, customer);
+						groupsService.associateProductWithGroup(product, newGroup);
+					}
+
 				}
 			}
 		}
