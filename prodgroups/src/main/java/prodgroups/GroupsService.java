@@ -45,7 +45,9 @@ public class GroupsService
 	public void unlinkGroupFromProduct(CustomerGroup group, Product product) {
 	 	groupsDAO.unlinkGroupFromProduct(product, group);
 	}
-
+	public List <CustomerGroup> getGroups () {
+	 	return groupsDAO.getGroups();
+	}
 	public CustomerGroup createGroup() {
 	 	String groupName = groupsDAO.getNextGroupId();
 	 	CustomerGroup group = new CustomerGroup(groupName);
@@ -75,5 +77,26 @@ public class GroupsService
 
 	public CustomerGroup findGroup(CustomerGroup newGroup) {
 	 	return groupsDAO.findGroup(newGroup);
+	}
+	public CustomerGroup findGroup(CustomerGroup newGroup, List<CustomerGroup> customerGroups, String except, boolean exactMatch) {
+		return groupsDAO.findGroup(newGroup, customerGroups, except, exactMatch);
+	}
+
+
+	public CustomerGroup subtractCustomerGroupFromCustomers(CustomerGroup group, CustomerGroup beingSubtracted) {
+	 	CustomerGroup result = group;
+	 	List<Customer> customers = new ArrayList<>();
+	 	for (Customer g : group.getCustomers()) {
+	 		if (!beingSubtracted.getAllCustomerNames().contains(g.getName())) {
+	 			customers.add(g);
+			}
+		}
+	 	result.setCustomers(customers);
+	 	//result.setSubgroups(group.getSubgroups());
+	 	return result;
+	}
+
+	public void addSubgroup(CustomerGroup group, CustomerGroup subgroup) {
+	 	group.addSubgroup(subgroup);
 	}
 }

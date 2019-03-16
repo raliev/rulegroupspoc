@@ -86,15 +86,10 @@ public class GroupsDAO {
         Iterator<CustomerGroup> iterCustomerGroups = sortedListOfGroups.iterator();
             while (iterCustomerGroups.hasNext()) {
             CustomerGroup key = iterCustomerGroups.next();
-            System.out.printf("* %s: %s\n", key.getName(), toCommaSep(key.getAllCustomerNames()));
+            System.out.printf("* %s: %s\n", key.getName(), CommonUtils.toCommaSep(key.getAllCustomerNames()));
         }
         System.out.println();
 
-    }
-
-    private Object toCommaSep(List<String> allCustomerNames) {
-        return allCustomerNames.stream()
-                .collect( Collectors.joining( "," ) );
     }
 
     public void printGroupsForDebugPurposes() {
@@ -209,14 +204,17 @@ public class GroupsDAO {
         }
         System.out.println();
     }
-
     public CustomerGroup findGroup(CustomerGroup group) {
+        return findGroup(group, new ArrayList<>(allGroups), "", false);
+    }
+    public CustomerGroup findGroup(CustomerGroup group, List<CustomerGroup> allGroups, String except, boolean exactMatch) {
         if (group == null) { return null; }
         if (group.getCustomers() == null) { return null; }
         List<String> customer = group.getAllCustomerNames();
         Collections.sort(customer, (o1, o2) -> o1.toString().compareTo(o2.toString()));
 
         for (CustomerGroup g : allGroups) {
+            if (g.getName().equals(except)) { continue; }
             CustomerGroup savedGroup = new CustomerGroup("");
             int cnt = 0;
             for (String c : g.getAllCustomerNames()) {
@@ -226,8 +224,13 @@ public class GroupsDAO {
                     savedGroup = g;
                 }
             }
-            if (cnt == group.getCustomers().size()) { return savedGroup; }
+            if (cnt == group.getCustomers().size() && cnt == g.getCustomers().size() && exactMatch) { return savedGroup; }
+            if (cnt == group.getCustomers().size() && exactMatch == false) { return savedGroup; }
         }
         return null;
+    }
+
+    public List<CustomerGroup> getGroups() {
+        return new ArrayList(allGroups);
     }
 }

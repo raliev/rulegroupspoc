@@ -9,10 +9,27 @@ public class CustomerGroup
 {
 	String name;
 	List<Customer> customers = new ArrayList<>();
+	List<CustomerGroup> subgroups = new ArrayList<>();
 	private List<String> cachedAllCustomerNames = null;
 
 	public CustomerGroup(String groupName) {
 		name = groupName;
+	}
+	public CustomerGroup(String groupName, List<Customer> customers) {
+		name = groupName;
+		this.customers = customers;
+	}
+	public CustomerGroup(String groupName, List<String> customers, boolean t) {
+		name = groupName;
+		this.customers = new ArrayList<>();
+		for (String customer: customers)
+			this.customers.add(new Customer(customer));
+	}
+	public CustomerGroup(String groupName, List<Integer> customers, String t) {
+		name = groupName;
+		this.customers = new ArrayList<>();
+		for (Integer customer: customers)
+			this.customers.add(new Customer(customer.toString()));
 	}
 
 	public List<Customer> getCustomers()
@@ -46,5 +63,20 @@ public class CustomerGroup
 			cachedAllCustomerNames.add(cust.getName());
 		}
 		return cachedAllCustomerNames;
+	}
+
+   public void addSubgroup(CustomerGroup subgroup) {
+		subgroups.add(subgroup);
+   }
+	public void addSubgroups(List<CustomerGroup> subgroups) {
+		subgroups.addAll(subgroups);
+	}
+
+	public List<CustomerGroup> getSubgroups() {
+		return subgroups;
+	}
+
+	public void setSubgroups(List<CustomerGroup> subgroups) {
+		this.subgroups = subgroups;
 	}
 }

@@ -8,6 +8,8 @@ class RuleProcessor
 {
 	GroupsService groupsService = new GroupsService();
 
+	int minLength = 3;
+
 	public void printProductGroupTable() {
 		groupsService.printGroupsForDebugPurposes();
 	}
@@ -100,4 +102,41 @@ class RuleProcessor
 		System.out.println("RULE>> "+customer.getName() + " <"+op.name()+"> "+product.getName());
 	}
 
+	public void parseAndProcess(String st) {
+		if (st.indexOf("-!>") > 0) {
+			String customerId = st.substring(0, st.indexOf("-!>"));
+			String productId  = st.substring(st.indexOf("-!>") + 3, st.length());
+			process(customerId, productId, "include");
+		}
+		if (st.indexOf("-x>") > 0) {
+			String customerId = st.substring(0, st.indexOf("-x>"));
+			String productId  = st.substring(st.indexOf("-x>") + 3, st.length());
+			process(customerId, productId, "exclude");
+		}
+		if (st.indexOf("=") > 0 && st.indexOf(">") >= 0 && st.indexOf(">") < st.indexOf("=")) {
+			String var = st.substring(0, st.indexOf("="));
+			String value  = st.substring(st.indexOf("=") + 1, st.length());
+			if (var.toLowerCase().equals(">minlength")) {
+				minLength = Integer.parseInt(value);
+			}
+		}
+
+		if (st.indexOf(">printGroups") >= 0) {
+			printProductGroupTable();
+		}
+		if (st.indexOf(">printGroupDetails") >= 0) {
+			printGroupDetailsForDebugPurposes();
+		}
+		if (st.indexOf(">printCustomerMatrix") >= 0) {
+			printCustomerProductMatrix();
+		}
+		if (st.indexOf(">optimize") >= 0) {
+			GroupProcessor groupProcessor = new GroupProcessor();
+			groupProcessor.setGroups(groupsService.getGroups());
+			groupProcessor.setMinLength(minLength);
+			groupProcessor.optimize();
+			groupProcessor.printGroupsForDebug();
+		}
+
+	}
 }
