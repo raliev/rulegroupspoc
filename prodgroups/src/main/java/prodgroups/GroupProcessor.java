@@ -5,7 +5,8 @@ import java.util.stream.Collectors;
 
 public class GroupProcessor {
 
-    int minLength = 0;
+    int minLength = 3;
+    int minReplacement = 2;
 
     List<CustomerGroup> groups = new ArrayList<>();
 
@@ -34,6 +35,14 @@ public class GroupProcessor {
 
     public void setMinLength(int minLength) {
         this.minLength = minLength;
+    }
+
+    public int getMinReplacement() {
+        return minReplacement;
+    }
+
+    public void setMinReplacement(int minReplacement) {
+        this.minReplacement = minReplacement;
     }
 
     public boolean optimize_step() {
@@ -71,7 +80,7 @@ public class GroupProcessor {
              System.out.println(">> "+groups.get(0).getAllCustomerNames());
              if (foundGroup == null) {
                  //adding a group
-                 if (selectedPair.getIntersection().getCustomers().size() <= 1) { return false; }
+                 if (selectedPair.getIntersection().getCustomers().size() < getMinReplacement()) { return false; }
                  result = true;
 
                  CustomerGroup group = groupsService.createGroup();

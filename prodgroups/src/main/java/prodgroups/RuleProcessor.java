@@ -9,6 +9,7 @@ class RuleProcessor
 	GroupsService groupsService = new GroupsService();
 
 	int minLength = 3;
+	int minReplacement = 2;
 
 	public void printProductGroupTable() {
 		groupsService.printGroupsForDebugPurposes();
@@ -116,8 +117,11 @@ class RuleProcessor
 		if (st.indexOf("=") > 0 && st.indexOf(">") >= 0 && st.indexOf(">") < st.indexOf("=")) {
 			String var = st.substring(0, st.indexOf("="));
 			String value  = st.substring(st.indexOf("=") + 1, st.length());
-			if (var.toLowerCase().equals(">minlength")) {
+			if (var.toLowerCase().equals(">min.seq.size")) {
 				minLength = Integer.parseInt(value);
+			}
+			if (var.toLowerCase().equals(">min.replacement.size")) {
+				minReplacement = Integer.parseInt(value);
 			}
 		}
 
@@ -134,6 +138,7 @@ class RuleProcessor
 			GroupProcessor groupProcessor = new GroupProcessor();
 			groupProcessor.setGroups(groupsService.getGroups());
 			groupProcessor.setMinLength(minLength);
+			groupProcessor.setMinReplacement(minReplacement);
 			groupProcessor.optimize();
 			groupProcessor.printGroupsForDebug();
 		}

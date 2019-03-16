@@ -20,5 +20,9 @@ C00000004-!>P00000005
 C00000002-!>P00000001
 C00000005-!>P00000001
 C00000001-!>P00000001
->minlength=2
+>printGroups
+>printGroupDetails
+>printCustomerMatrix
+>min.seq.size=2
+>min.replacement.size=1
 >optimize
