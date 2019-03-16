@@ -12,6 +12,7 @@ import java.util.List;
 
 public class App
 {
+    static String filename = "testrules2.txt";
     public static void main( String[] args )
     {
  //       test1();
@@ -28,7 +29,7 @@ public class App
         String s = currentRelativePath.toAbsolutePath().toString();
         System.out.println("Current relative path is: " + s);
 
-        File file = new File("testrules.txt");
+        File file = new File(filename);
 
         BufferedReader br = new BufferedReader(new FileReader(s+"/prodgroups/"+file));
 
